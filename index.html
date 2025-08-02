@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gill's Student Corner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background-color: #ffd54f;
+      padding: 1rem;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      background-color: #fff8e1;
+      padding: 1rem;
+      flex-wrap: wrap;
+    }
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+    }
+    section {
+      padding: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    .yellow-heart {
+      font-size: 2rem;
+      cursor: pointer;
+    }
+    .hidden-message {
+      display: none;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+    .gallery img {
+      width: 100px;
+      margin-right: 1rem;
+      border-radius: 10px;
+    }
+    #login-section {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    #todo-list input {
+      padding: 0.5rem;
+      margin-right: 0.5rem;
+    }
+    .todo-item {
+      margin: 0.5rem 0;
+    }
+    #quote-box {
+      background-color: #fffde7;
+      padding: 1rem;
+      border-left: 5px solid #fbc02d;
+      font-style: italic;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body onload="checkLogin(); generateQuote();">
+  <header>
+    <h1>📚 Gill's Student Corner</h1>
+    <p>A space for help, healing, and a bit of fun 🌟</p>
+  </header>
+
+  <div id="login-section" class="card">
+    <h2>🔐 Welcome</h2>
+    <p>Enter your name:</p>
+    <input type="text" id="username" placeholder="Your name">
+    <button onclick="login()">Enter</button>
+    <p id="welcome-message"></p>
+  </div>
+
+  <nav>
+    <a href="#study">Study Help</a>
+    <a href="#mental">Mental Health</a>
+    <a href="#tools">Tools</a>
+    <a href="#fun">Entertainment</a>
+    <a href="#interactive">Interactive</a>
+  </nav>
+
+  <section id="study">
+    <div class="card">
+      <h2>📖 Study Help</h2>
+      <ul>
+        <li><strong>Lesson Summaries:</strong> Quick summaries of common subjects</li>
+        <li><strong>Reviewers:</strong> Downloadable PDFs for quizzes</li>
+        <li><strong>Homework Tips:</strong> How to answer common tasks</li>
+        <li><strong>Study Tips:</strong> Improve focus, memory, and time use</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="mental">
+    <div class="card">
+      <h2>🧘 Mental Health & Support</h2>
+      <p>Click the heart to feel seen 💛</p>
+      <div class="yellow-heart" onclick="document.getElementById('message').style.display='block';">💛</div>
+      <div id="message" class="hidden-message"></div>
+      <ul>
+        <li>✨ Motivational Quotes</li>
+        <li>💬 Confession Box (coming soon)</li>
+        <li>📖 Journaling Ideas</li>
+        <li>🎵 Lo-fi & Relax Playlists</li>
+      </ul>
+      <div id="quote-box"></div>
+    </div>
+  </section>
+
+  <section id="tools">
+    <div class="card">
+      <h2>🛠️ Productivity Tools</h2>
+      <div id="todo-list">
+        <input type="text" id="new-task" placeholder="Add a new task">
+        <button onclick="addTask()">Add</button>
+        <ul id="task-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="fun">
+    <div class="card">
+      <h2>🎉 Entertainment</h2>
+      <ul>
+        <li>🎮 Mini Games (embed soon)</li>
+        <li>🤣 Funny Memes Gallery</li>
+        <li>🎨 Student Art & Poetry</li>
+        <li>🌟 Student of the Month</li>
+      </ul>
+      <div class="gallery">
+        <img src="https://via.placeholder.com/100" alt="Sample art">
+        <img src="https://via.placeholder.com/100" alt="Poem">
+      </div>
+      <h3>🎧 Chill Music</h3>
+      <audio controls>
+        <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </section>
+
+  <section id="interactive">
+    <div class="card">
+      <h2>📢 Interactive Corner</h2>
+      <ul>
+        <li>📊 Weekly Polls: "What’s the hardest subject this week?"</li>
+        <li>💡 Suggestion Box</li>
+        <li>💬 Comments Section (planned)</li>
+        <li>🎓 Study Buddy Finder</li>
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    function login() {
+      const name = document.getElementById("username").value;
+      if (name) {
+        localStorage.setItem("studentName", name);
+        checkLogin();
+      }
+    }
+
+    function checkLogin() {
+      const name = localStorage.getItem("studentName");
+      if (name) {
+        document.getElementById("login-section").style.display = 'none';
+        const msg = `Hey ${name} 🌷 I know things have been really hectic for you, but please don’t forget how much you matter. You are not alone. Take it one breath at a time.`;
+        document.getElementById("message").innerText = msg;
+        document.getElementById("message").style.display = 'block';
+      }
+    }
+
+    function addTask() {
+      const taskInput = document.getElementById("new-task");
+      const taskText = taskInput.value.trim();
+      if (taskText) {
+        const li = document.createElement("li");
+        li.className = "todo-item";
+        li.textContent = taskText;
+        document.getElementById("task-list").appendChild(li);
+        taskInput.value = "";
+      }
+    }
+
+    function generateQuote() {
+      const quotes = [
+        "You're doing better than you think you are.",
+        "Progress is progress, no matter how small.",
+        "Rest is productive too.",
+        "You don’t have to do it all at once."
+      ];
+      const quote = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById("quote-box").innerText = `💬 ${quote}`;
+    }
+  </script>
+</body>
+</html>
